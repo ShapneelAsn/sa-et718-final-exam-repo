@@ -1,0 +1,17 @@
+class SkillController < ApplicationController
+  def create
+    @resume = Resume.find(params[:resume_id])
+    @skill = @resume.skill.create(skill_params)
+    redirect_to resume_path(@resume)
+  end
+  def destroy
+    @resume = Resume.find(params[:resume_id])
+    @skill = @resume.skills.find(params[:id])
+    @skill.destroy
+    redirect_to resume_path(@resume)
+  end
+  private
+    def skill_params
+      params.require(:skill).permit(:title, :level)
+    end
+end
